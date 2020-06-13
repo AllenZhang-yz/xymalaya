@@ -1,4 +1,4 @@
-import React, {memo, useEffect, createRef} from 'react';
+import React, {memo, useEffect, createRef, useRef} from 'react';
 import {
   View,
   Image,
@@ -12,9 +12,9 @@ import {useHeaderHeight} from '@react-navigation/stack';
 import {useSelector, useDispatch} from 'react-redux';
 import {BlurView} from '@react-native-community/blur';
 import {RootState} from '@/models/index';
-import {IAuthor} from '@/models/Album';
+import {IAuthor, IProgram} from '@/models/Album';
 import {RouteProp} from '@react-navigation/native';
-import {RootStackParamList, RootStackNavigation} from '@/navigator/index';
+import {RootStackParamList, ModalStackNavigation} from '@/navigator/index';
 import coverRight from '@/assets/cover-right.png';
 import Tab from './Tab';
 import {
@@ -28,7 +28,7 @@ import {viewportHeight} from '@/utils/index';
 
 interface IAlbumProps {
   route: RouteProp<RootStackParamList, 'Album'>;
-  navigation: RootStackNavigation;
+  navigation: ModalStackNavigation;
 }
 
 const HEADER_HEIGHT = 260;
@@ -45,15 +45,15 @@ const Album: React.FC<IAlbumProps> = memo(({route, navigation}) => {
 
   const {id, title, image} = route.params.item;
 
-  const translationYz = new Animated.Value(0);
-  const lastScrollY = new Animated.Value(0);
-  let lastScrollYValue = 0;
+  const translationYz = useRef(new Animated.Value(0)).current;
+  const lastScrollY = useRef(new Animated.Value(0)).current;
+  let lastScrollYValue = useRef(0).current;
   const reverseLastScrollY = Animated.multiply(
     new Animated.Value(-1),
     lastScrollY,
   );
-  let translationYValue = 0;
-  const translationYOffset = new Animated.Value(0);
+  let translationYValue = useRef(0).current;
+  const translationYOffset = useRef(new Animated.Value(0)).current;
   const translateTraceY = Animated.add(
     Animated.add(translationYz, reverseLastScrollY),
     translationYOffset,
@@ -70,12 +70,14 @@ const Album: React.FC<IAlbumProps> = memo(({route, navigation}) => {
         outputRange: [1, 0],
       }),
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const author = useSelector<RootState, IAuthor>((state) => state.album.author);
   const summary = useSelector<RootState, string>(
     (state) => state.album.summary,
   );
+  const list = useSelector<RootState, IProgram[]>((state) => state.album.list);
 
   const renderHeader = () => {
     return (
@@ -104,6 +106,22 @@ const Album: React.FC<IAlbumProps> = memo(({route, navigation}) => {
         </View>
       </View>
     );
+  };
+
+  const onItemPress = (data: IProgram, index: number) => {
+    const previousItem = list[index - 1];
+    const nextItem = list[index + 1];
+    dispatch({
+      type: 'player/setState',
+      payload: {
+        previousId: previousItem ? previousItem.id : '',
+        nextId: nextItem ? nextItem.id : '',
+        title: data.title,
+        thumbnailUrl: route.params.item.image,
+        sounds: list.map((item) => ({id: item.id, title: item.title})),
+      },
+    });
+    navigation.navigate('Detail', {id: data.id});
   };
 
   const onScrollDrag = Animated.event(
@@ -194,6 +212,7 @@ const Album: React.FC<IAlbumProps> = memo(({route, navigation}) => {
                 tapRef={tapRef}
                 nativeRef={nativeRef}
                 onScrollDrag={onScrollDrag}
+                onItemPress={onItemPress}
               />
             </View>
           </Animated.View>

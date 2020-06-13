@@ -7,14 +7,14 @@ import Touchable from '@/components/Touchable';
 interface IItemProps {
   data: IProgram;
   index: number;
-  onPress: (data: IProgram) => void;
+  onPress: (data: IProgram, index: number) => void;
 }
 
 const Item: React.FC<IItemProps> = ({data, index, onPress}) => {
   const {title, playVolume, duration, date} = data;
   const itemOnPress = () => {
     if (typeof onPress === 'function') {
-      onPress(data);
+      onPress(data, index);
     }
   };
   return (

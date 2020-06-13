@@ -5577,6 +5577,11 @@ react-native-screens@^2.7.0:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.7.0.tgz#2d3cf3c39a665e9ca1c774264fccdb90e7944047"
   integrity sha512-n/23IBOkrTKCfuUd6tFeRkn3lB2QZ3cmvoubRscR0JU/Zl4/ZyKmwnFmUv1/Fr+2GH/H8UTX59kEKDYYg3dMgA==
 
+react-native-slider-x@^0.11.3:
+  version "0.11.3"
+  resolved "https://registry.yarnpkg.com/react-native-slider-x/-/react-native-slider-x-0.11.3.tgz#a1a7561e807c5d38019e9bdffbef2cd2e75ef7e9"
+  integrity sha512-xuxFhyhK1agUjfj31ifTHbFYDwTXXfQh+j/ZNCeskuiIWimb2iWFFfP9PYe607UYQ5nUdUIlQZLTNnRaY9+t7g==
+
 react-native-snap-carousel@^3.9.0:
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/react-native-snap-carousel/-/react-native-snap-carousel-3.9.0.tgz#017793ca3f5e901ccd5a3117d79bb18ec08928a3"
@@ -5584,6 +5589,11 @@ react-native-snap-carousel@^3.9.0:
   dependencies:
     prop-types "^15.6.1"
     react-addons-shallow-compare "15.6.2"
+
+react-native-sound@^0.11.0:
+  version "0.11.0"
+  resolved "https://registry.yarnpkg.com/react-native-sound/-/react-native-sound-0.11.0.tgz#ad60b55ba8c6dc89917f381ad3713f2738de530f"
+  integrity sha512-4bGAZfni6E2L695NQjOZwNLBQGXgBGYC4Sy+h99K5h0HqNZjCqR0+aLel+ezASxEJDpaH83gylNObXpiqJgdwg==
 
 react-native-storage@^1.0.1:
   version "1.0.1"

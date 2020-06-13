@@ -1,5 +1,5 @@
 import React from 'react';
-import {ListRenderItemInfo, Alert, Animated, StyleSheet} from 'react-native';
+import {ListRenderItemInfo, Animated, StyleSheet} from 'react-native';
 import {useSelector} from 'react-redux';
 import {RootState} from '@/models/index';
 import {IProgram} from '@/models/Album';
@@ -12,10 +12,11 @@ const List: React.FC<ITabProps> = ({
   tapRef,
   nativeRef,
   onScrollDrag,
+  onItemPress,
 }) => {
   const list = useSelector<RootState, IProgram[]>((state) => state.album.list);
-  const onPress = (data: IProgram) => {
-    Alert.alert('album clicked');
+  const onPress = (data: IProgram, index: number) => {
+    onItemPress(data, index);
   };
   const renderItem = ({item, index}: ListRenderItemInfo<IProgram>) => {
     return <Item data={item} index={index} onPress={onPress} />;

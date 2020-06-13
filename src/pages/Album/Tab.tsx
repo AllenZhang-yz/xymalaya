@@ -13,6 +13,7 @@ import {
   TapGestureHandler,
   NativeViewGestureHandler,
 } from 'react-native-gesture-handler';
+import {IProgram} from '@/models/Album';
 
 interface IRoute {
   key: string;
@@ -29,6 +30,7 @@ export interface ITabProps {
   tapRef: RefObject<TapGestureHandler>;
   nativeRef: RefObject<NativeViewGestureHandler>;
   onScrollDrag: (event: NativeSyntheticEvent<NativeScrollEvent>) => void;
+  onItemPress: (data: IProgram, index: number) => void;
 }
 
 const Tab: React.FC<ITabProps> = ({
@@ -36,6 +38,7 @@ const Tab: React.FC<ITabProps> = ({
   tapRef,
   nativeRef,
   onScrollDrag,
+  onItemPress,
 }) => {
   const [index, setIndex] = useState(1);
   const onIndexChange = (tabIndex: number) => {
@@ -52,6 +55,7 @@ const Tab: React.FC<ITabProps> = ({
             tapRef={tapRef}
             nativeRef={nativeRef}
             onScrollDrag={onScrollDrag}
+            onItemPress={onItemPress}
           />
         );
     }
