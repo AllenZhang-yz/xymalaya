@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef, useCallback} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {View, Text, StyleSheet, Animated} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -9,9 +9,9 @@ import Touchable from '@/components/Touchable';
 import PlaySlider from './PlaySlider';
 import {viewportWidth} from '@/utils/index';
 import LinearGradient from 'react-native-linear-gradient';
-import Barrage, {IBarrage} from '@/components/Barrage';
+import {IBarrage} from '@/components/Barrage';
 
-const data: string[] = [
+const DATA: string[] = [
   '最灵繁的人也看不见自己的背脊',
   '朝闻道，夕死可矣',
   '阅读是人类进步的阶梯',
@@ -51,29 +51,36 @@ const Detail: React.FC<IDetailProps> = ({route, navigation}) => {
     (state) => state.player.previousId,
   );
   const nextId = useSelector<RootState, string>((state) => state.player.nextId);
+  const id = useSelector<RootState, string>((state) => state.player.id);
 
   useEffect(() => {
-    dispatch({
-      type: 'player/fetchShow',
-      payload: {
-        id: route.params.id,
-      },
-    });
-    addBarrage();
+    if (route.params && route.params.id !== id) {
+      dispatch({
+        type: 'player/fetchShow',
+        payload: {
+          id: route.params.id,
+        },
+      });
+    } else {
+      dispatch({
+        type: 'player/play',
+      });
+    }
 
+    addBarrage();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     navigation.setOptions({headerTitle: title});
   }, [navigation, title]);
-  useEffect(() => {
-    return () => {
-      dispatch({
-        type: 'player/pause',
-      });
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     dispatch({
+  //       type: 'player/pause',
+  //     });
+  //   };
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   const anim = useRef(new Animated.Value(1)).current;
 
@@ -82,7 +89,7 @@ const Detail: React.FC<IDetailProps> = ({route, navigation}) => {
   };
 
   const getText = () => {
-    return data[randomIndex(data.length)];
+    return DATA[randomIndex(DATA.length)];
   };
 
   const togglePlay = () => {
@@ -113,7 +120,7 @@ const Detail: React.FC<IDetailProps> = ({route, navigation}) => {
       if (showBarrage) {
         const id = Date.now();
         const barrageTitle = getText();
-        setBarrageData([...barrageData, {id, barrageTitle}]);
+        setBarrageData((data) => [...data, {id, barrageTitle}]);
       }
     }, 1000);
   };
@@ -132,7 +139,7 @@ const Detail: React.FC<IDetailProps> = ({route, navigation}) => {
             colors={['rgba(128,104,102,0.5)', '#807c66']}
             style={styles.linear}
           />
-          {/* <Barrage data={barrageData} /> */}
+          {/* <Barrage data={barrageData} maxTrack={5} /> */}
         </>
       )}
       <Touchable style={styles.barrage} onPress={barrage}>

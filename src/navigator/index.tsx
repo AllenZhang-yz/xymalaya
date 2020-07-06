@@ -1,6 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Platform, Animated, StyleSheet} from 'react-native';
-import {NavigationContainer, RouteProp} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  NavigationState,
+  RouteProp,
+} from '@react-navigation/native';
 import {
   createStackNavigator,
   StackNavigationProp,
@@ -13,6 +17,10 @@ import BottomTabs from './BottomTabs';
 import Category from '@/pages/Category';
 import Album from '@/pages/Album';
 import Detail from '@/pages/Detail';
+import PlayView from '@/pages/Views/PlayView';
+import {findRouteNameFromNavigatorState, navigationRef} from '@/utils/index';
+import Login from '@/pages/Login';
+import SplashScreen from 'react-native-splash-screen';
 
 export type RootStackParamList = {
   BottomTabs: {
@@ -96,6 +104,7 @@ export type ModalStackParamList = {
   Detail: {
     id: string;
   };
+  Login: undefined;
 };
 
 const ModalStack = createStackNavigator<ModalStackParamList>();
@@ -112,6 +121,7 @@ const ModalStackScreen = () => {
         gestureEnabled: true,
         ...TransitionPresets.ModalSlideFromBottomIOS,
         headerBackTitleVisible: false,
+        headerTintColor: '#333',
       }}>
       <ModalStack.Screen
         name="Root"
@@ -136,17 +146,40 @@ const ModalStackScreen = () => {
           ),
         }}
       />
+      <ModalStack.Screen
+        name="Login"
+        component={Login}
+        options={{headerTitle: 'Login'}}
+      />
     </ModalStack.Navigator>
   );
 };
 
-const Navigator: React.FC = () => {
-  return (
-    <NavigationContainer>
-      <ModalStackScreen />
-    </NavigationContainer>
-  );
-};
+class Navigator extends Component {
+  state = {
+    routeName: 'home',
+  };
+  componentDidMount() {
+    SplashScreen.hide();
+  }
+  onStateChange = (state: NavigationState | undefined) => {
+    if (typeof state !== 'undefined') {
+      const routeName = findRouteNameFromNavigatorState(state);
+      this.setState({routeName});
+    }
+  };
+  render() {
+    const {routeName} = this.state;
+    return (
+      <NavigationContainer
+        ref={navigationRef}
+        onStateChange={this.onStateChange}>
+        <ModalStackScreen />
+        <PlayView routeName={routeName} />
+      </NavigationContainer>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   headerBackground: {

@@ -68,6 +68,17 @@ const getCurrentTime = () => {
   });
 };
 
+const setCurrentTime = (currentTime: any) => {
+  return new Promise((resolve) => {
+    if (sound && sound.isLoaded()) {
+      sound.setCurrentTime(currentTime);
+      resolve();
+    } else {
+      resolve();
+    }
+  });
+};
+
 const getDuration = () => {
   if (sound) {
     return sound.getDuration();
@@ -75,4 +86,4 @@ const getDuration = () => {
   return 0;
 };
 
-export {init, play, pause, stop, getCurrentTime, getDuration};
+export {init, play, pause, stop, getCurrentTime, setCurrentTime, getDuration};

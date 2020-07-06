@@ -16,15 +16,23 @@ const Barrage: React.FC<IProps> = ({data}) => {
   const [list, setList] = useState<IBarrage[]>(data);
 
   useEffect(() => {
-    if (data !== barrageData) {
-      setList(list.concat(data));
-    }
-  }, [barrageData, data, list]);
+    setList((prevList) => prevList.concat(data));
+  }, []);
 
   // console.log('list', list);
+  const outside = (barrage: IBarrage) => {
+    const newList = list.slice();
+    if (newList.length > 0) {
+      const deleteIndex = newList.indexOf(barrage);
+      if (deleteIndex > -1) {
+        newList.splice(deleteIndex, 1);
+        setList(newList);
+      }
+    }
+  };
 
   const renderItem = (item: IBarrage, index: number) => {
-    return <Item key={item.id} data={item} />;
+    return <Item key={item.id} data={item} outside={outside} />;
   };
 
   return <View>{list.map(renderItem)}</View>;

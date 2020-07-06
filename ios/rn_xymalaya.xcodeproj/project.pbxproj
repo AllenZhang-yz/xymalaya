@@ -20,6 +20,7 @@
 		8E0E7D523B2563048538C3A1 /* libPods-rn_xymalaya.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B6F3FB2FDBE64FCC93993B09 /* libPods-rn_xymalaya.a */; };
 		C9D3D61D6E87346C2EBA9975 /* libPods-rn_xymalaya-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 885115886150AF2D81327B1E /* libPods-rn_xymalaya-tvOS.a */; };
 		DC431766BF62757C43554BD4 /* libPods-rn_xymalaya-rn_xymalayaTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C61C76FC6BCE7974786D1AE /* libPods-rn_xymalaya-rn_xymalayaTests.a */; };
+		E697D5E824ADCB3600E18D1A /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E697D5E724ADCB3600E18D1A /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,7 +41,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00E356EE1AD99517003FC87E /* rn_xymalayaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = rn_xymalayaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* rn_xymalayaTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = rn_xymalayaTests.m; sourceTree = "<group>"; };
@@ -63,6 +63,7 @@
 		885115886150AF2D81327B1E /* libPods-rn_xymalaya-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rn_xymalaya-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B6F3FB2FDBE64FCC93993B09 /* libPods-rn_xymalaya.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-rn_xymalaya.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCA644D038D78EF2C1DFCB07 /* Pods-rn_xymalaya-rn_xymalayaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rn_xymalaya-rn_xymalayaTests.debug.xcconfig"; path = "Target Support Files/Pods-rn_xymalaya-rn_xymalayaTests/Pods-rn_xymalaya-rn_xymalayaTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E697D5E724ADCB3600E18D1A /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		E8FB1150D361713EC2FA45BC /* Pods-rn_xymalaya.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-rn_xymalaya.release.xcconfig"; path = "Target Support Files/Pods-rn_xymalaya/Pods-rn_xymalaya.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -125,7 +126,6 @@
 		13B07FAE1A68108700A75B9A /* rn_xymalaya */ = {
 			isa = PBXGroup;
 			children = (
-				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -148,7 +148,6 @@
 				01F9592DC9C7DA0A7D055CDC /* Pods-rn_xymalaya-tvOSTests.debug.xcconfig */,
 				482B5ACE4362AC61D02EFDB7 /* Pods-rn_xymalaya-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -175,6 +174,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				E697D5E724ADCB3600E18D1A /* Launch Screen.storyboard */,
 				13B07FAE1A68108700A75B9A /* rn_xymalaya */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* rn_xymalayaTests */,
@@ -340,6 +340,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E697D5E824ADCB3600E18D1A /* Launch Screen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);

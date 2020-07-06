@@ -10,10 +10,12 @@ import Found from '@/pages/Found';
 import Account from '@/pages/Account';
 import {RootStackNavigation, RootStackParamList} from './index';
 import HomeTabs from './HomeTabs';
+import Play from '@/pages/Views/Play';
 
 export type BottomTabParamList = {
   HomeTabs: undefined;
   Listen: undefined;
+  Play: undefined;
   Found: undefined;
   Account: undefined;
 };
@@ -77,11 +79,20 @@ const BottomTabs: React.FC<IBottomTabsProps> = ({navigation, route}) => {
         name="Listen"
         component={Listen}
         options={{
-          tabBarLabel: 'Favorite',
+          tabBarLabel: 'My Songs',
           tabBarIcon: ({color, size}) => (
             <FontAwesome name="star" size={size} color={color} />
           ),
         }}
+      />
+      <Tab.Screen
+        name="Play"
+        component={Play}
+        options={({navigation}) => ({
+          tabBarButton: () => (
+            <Play onPress={() => navigation.navigate('Detail')} />
+          ),
+        })}
       />
       <Tab.Screen
         name="Found"

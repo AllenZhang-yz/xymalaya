@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Slider from 'react-native-slider-x';
 import {useSelector} from 'react-redux';
@@ -31,6 +31,7 @@ const PlaySlider: React.FC = () => {
         minimumTrackTintColor="#fff"
         renderThumb={renderThumb}
         thumbStyle={styles.thumb}
+        // onValueChange={onValueChange}
       />
     </View>
   );

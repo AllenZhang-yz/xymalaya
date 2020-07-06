@@ -5,9 +5,10 @@ import {IBarrage} from './index';
 
 interface IProps {
   data: IBarrage;
+  outside: (data: IBarrage) => void;
 }
 
-const Item: React.FC<IProps> = memo(({data}) => {
+const Item: React.FC<IProps> = memo(({data, outside}) => {
   const translatedX = useRef(new Animated.Value(0)).current;
   useEffect(() => {
     Animated.timing(translatedX, {
@@ -15,12 +16,19 @@ const Item: React.FC<IProps> = memo(({data}) => {
       duration: 6000,
       easing: Easing.linear,
       useNativeDriver: true,
-    }).start();
+    }).start(({finished}) => {
+      if (finished) {
+        outside(data);
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Animated.View
       style={{
+        position: 'absolute',
+        top: Math.random() * 100,
         transform: [
           {
             translateX: translatedX.interpolate({

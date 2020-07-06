@@ -10,6 +10,7 @@ import {
   getDuration,
 } from '@/config/sound';
 import {RootState} from '@/models/index';
+import {saveProgram} from '@/config/realm';
 
 const SHOW_URL = '/mock/11/bear/show';
 
@@ -47,7 +48,7 @@ const initialState: PlayerModelState = {
   title: '',
   thumbnailUrl: '',
   soundUrl: '',
-  playState: '',
+  playState: 'paused',
   cTime: 0,
   duration: 0,
   previousId: '',
@@ -78,7 +79,8 @@ const playerModel: PlayerModel = {
     },
   },
   effects: {
-    *fetchShow({payload}, {call, put}) {
+    *fetchShow({payload}, {call, put, select}) {
+      yield call(stop);
       const {data} = yield call(axios.get, SHOW_URL, {
         params: {id: payload.id},
       });
@@ -93,6 +95,10 @@ const playerModel: PlayerModel = {
       });
 
       yield put({type: 'play'});
+      const {id, title, thumbnailUrl, cTime}: PlayerModelState = yield select(
+        ({player}: RootState) => player,
+      );
+      saveProgram({id, title, thumbnailUrl, cTime, duration: getDuration()});
     },
     *play({payload}, {call, put}) {
       yield put({
@@ -114,7 +120,7 @@ const playerModel: PlayerModel = {
         },
       });
     },
-    *pause({payload}, {call, put}) {
+    *pause({payload}, {call, put, select}) {
       yield call(pause);
       yield put({
         type: 'setState',
@@ -122,6 +128,10 @@ const playerModel: PlayerModel = {
           playState: 'paused',
         },
       });
+      const {id, cTime}: PlayerModelState = yield select(
+        ({player}: RootState) => player,
+      );
+      saveProgram({id, cTime});
     },
     watcherCurrentTime: [
       function* (sagaEffects) {
@@ -133,8 +143,8 @@ const playerModel: PlayerModel = {
       },
       {type: 'watcher'},
     ],
-    *previous({payload}, {call, put, select}) {
-      yield call(stop);
+    *previous({payload}, {put, select}) {
+      // yield call(stop);
       const {id, sounds}: PlayerModelState = yield select(
         ({player}: RootState) => player,
       );
@@ -159,8 +169,8 @@ const playerModel: PlayerModel = {
         },
       });
     },
-    *next({payload}, {call, put, select}) {
-      yield call(stop);
+    *next({payload}, {put, select}) {
+      // yield call(stop);
       const {id, sounds}: PlayerModelState = yield select(
         ({player}: RootState) => player,
       );
